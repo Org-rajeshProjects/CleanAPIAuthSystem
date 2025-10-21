@@ -16,4 +16,14 @@
     <ProjectReference Include="..\CleanAPIAuthSystem.Domain\CleanAPIAuthSystem.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTOs\Auth\" />
+    <Folder Include="DTOs\Users\" />
+    <Folder Include="Interfaces\Services\" />
+    <Folder Include="Interfaces\Repositories\" />
+    <Folder Include="Common\" />
+    <Folder Include="Mappings\" />
+    <Folder Include="Extensions\" />
+  </ItemGroup>
+
 </Project>

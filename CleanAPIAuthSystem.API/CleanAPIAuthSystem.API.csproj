@@ -23,4 +23,9 @@
     <ProjectReference Include="..\CleanAPIAuthSystem.Infrastructure\CleanAPIAuthSystem.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Middlewares\" />
+  </ItemGroup>
+
 </Project>
