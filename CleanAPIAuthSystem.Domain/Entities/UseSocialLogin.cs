@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CleanAPIAuthSystem.Domain.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,14 +11,11 @@ namespace CleanAPIAuthSystem.Domain.Entities
     /// UserSocialLogin Entity - Links social provider accounts to users
     /// Theory: Allows users to sign in with Google, GitHub, Microsoft, etc.
     /// Stores the provider's unique ID to match accounts
+    /// 
+    /// Inherits from BaseEntity<Guid> to get Id, CreatedAt, UpdatedAt
     /// </summary>
-    public class UserSocialLogin
+    public class UserSocialLogin : BaseEntity<Guid>
     {
-        /// <summary>
-        /// Primary Key
-        /// </summary>
-        public Guid Id { get; set; }
-
         /// <summary>
         /// Foreign Key to User
         /// </summary>
@@ -45,10 +43,8 @@ namespace CleanAPIAuthSystem.Domain.Entities
         /// </summary>
         public string? ProviderData { get; set; }
 
-        /// <summary>
-        /// When this social login was linked
-        /// </summary>
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        // CreatedAt is inherited from BaseEntity<Guid>
+        // No need to redeclare here
 
         /// <summary>
         /// Navigation property back to User

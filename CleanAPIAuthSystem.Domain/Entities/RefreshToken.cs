@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CleanAPIAuthSystem.Domain.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,14 +12,11 @@ namespace CleanAPIAuthSystem.Domain.Entities
     /// Theory: Access tokens are short-lived (15 mins) for security
     /// Refresh tokens are long-lived (7-30 days) and allow getting new access tokens
     /// without re-authentication
+    /// 
+    /// Inherits from BaseEntity<Guid> to get Id, CreatedAt, UpdatedAt
     /// </summary>
-    public class RefreshToken
+    public class RefreshToken : BaseEntity<Guid>
     {
-        /// <summary>
-        /// Primary Key
-        /// </summary>
-        public Guid Id { get; set; }
-
         /// <summary>
         /// Foreign Key - Links token to a user
         /// Theory: Establishes the relationship between RefreshToken and User
@@ -47,10 +45,8 @@ namespace CleanAPIAuthSystem.Domain.Entities
         /// </summary>
         public bool IsRevoked { get; set; }
 
-        /// <summary>
-        /// When token was created
-        /// </summary>
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        // CreatedAt is inherited from BaseEntity<Guid>
+        // No need to redeclare here
 
         /// <summary>
         /// IP address that created this token
@@ -86,5 +82,6 @@ namespace CleanAPIAuthSystem.Domain.Entities
         /// </summary>
         public bool IsActive => !IsRevoked && DateTime.UtcNow < ExpiresAt;
     }
+
 
 }

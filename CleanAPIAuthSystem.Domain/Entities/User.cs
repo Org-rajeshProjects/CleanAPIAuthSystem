@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CleanAPIAuthSystem.Domain.Common;
+using CleanAPIAuthSystem.Domain.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,15 +12,23 @@ namespace CleanAPIAuthSystem.Domain.Entities
     /// User Entity - Represents a user in the system
     /// Theory: An entity is a domain object with a unique identity that persists over time
     /// Unlike Value Objects, entities are defined by their ID, not their attributes
+    /// 
+    /// Inheritance from BaseEntity<Guid>:
+    /// - Gets Id property of type Guid
+    /// - Gets CreatedAt and UpdatedAt audit fields
+    /// - Implements IEntity<Guid> for generic repository support
     /// </summary>
-    public class User
+    public class User : BaseEntity<Guid>, IAuditableEntity
     {
         /// <summary>
-        /// Primary Key - Uniquely identifies each user
-        /// Theory: Using GUID instead of int for security (prevents enumeration attacks)
+        /// Primary Key inherited from BaseEntity<Guid>
+        /// Theory: BaseEntity provides common properties for all entities
+        /// Using GUID instead of int for security (prevents enumeration attacks)
         /// and distributed system compatibility (no conflicts when merging databases)
+        /// 
+        /// Note: Id property is inherited, we override it here for XML documentation
         /// </summary>
-        public Guid Id { get; set; }
+        public override Guid Id { get; set; }
 
         /// <summary>
         /// Email address - Used for authentication and communication
@@ -60,13 +70,16 @@ namespace CleanAPIAuthSystem.Domain.Entities
         /// </summary>
         public bool IsActive { get; set; } = true;
 
+        // CreatedAt and UpdatedAt are inherited from BaseEntity<Guid>
+        // We don't need to redeclare them here
+
         /// <summary>
-        /// Audit fields - Track when records are created/modified
-        /// Theory: Essential for debugging, compliance, and data integrity
-        /// DateTime.UtcNow ensures consistency across time zones
+        /// IAuditableEntity implementation - who created/modified the record
+        /// Theory: Track which admin/system user made changes
+        /// Useful for audit trails and compliance
         /// </summary>
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public DateTime? UpdatedAt { get; set; }
+        public string? CreatedBy { get; set; }
+        public string? UpdatedBy { get; set; }
 
         /// <summary>
         /// Navigation property - One user can have many refresh tokens
@@ -81,4 +94,6 @@ namespace CleanAPIAuthSystem.Domain.Entities
         /// </summary>
         public virtual ICollection<UserSocialLogin> SocialLogins { get; set; } = new List<UserSocialLogin>();
     }
+
+
 }
